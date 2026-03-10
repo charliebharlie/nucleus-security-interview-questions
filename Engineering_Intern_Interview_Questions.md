@@ -189,10 +189,10 @@ Put your code comments here. For comments on specific lines, please
 include the line number. Feel free to comment on the general task as
 well.
 
-Line 10: Using the hardcoded value 'dev-secret' as the default when the env variable 'WEBHOOK_SECRET' isn't set is dangerous. The app would be vulnerable as an attacker can just sign their malicious JSON using 'dev-secret'
-Line 22: Using the simple compare '==' is dangerous because an attacker can brute force the expected hash by checking the time it takes to returns. The more characters they get correct, the longer it takes to return, and they can take advantage of that.
-Lines 45 and 49: Using f-strings for the SQL query leads to the classic SQL Injection vulnerability where an attacker can just run malicious SQL commands (such as DROP TABLE users)
-Line 49: The query doesn't run an upsert, but rather an insert which can cause duplicates. Use 'INSERT ... ON CONFLICT' for upsert
+- Line 10: Using the hardcoded value 'dev-secret' as the default when the env variable 'WEBHOOK_SECRET' isn't set is dangerous. The app would be vulnerable as an attacker can just sign their malicious JSON using 'dev-secret'
+- Line 22: Using the simple compare '==' is dangerous because an attacker can brute force the expected hash by checking the time it takes to returns. The more characters they get correct, the longer it takes to return, and they can take advantage of that.
+- Lines 45 and 49: Using f-strings for the SQL query leads to the classic SQL Injection vulnerability where an attacker can just run malicious SQL commands (such as DROP TABLE users)
+- Line 49: The query doesn't run an upsert, but rather an insert which can cause duplicates. Use 'INSERT ... ON CONFLICT' for upsert
 
 
 ------------------------------------------------------------------------
@@ -208,13 +208,13 @@ How does the timing attack work for ==
 ```
 2.  For each prompt:
     -   Tell us what you were hoping for the AI to accomplish.
-      - I wanted to check beyond the basic bugs as I didn't want to waste the time spending on it. I rather would want it to find the niche bugs that I couldn't see at a first glance
+        - I wanted to check beyond the basic bugs as I didn't want to waste the time spending on it. I rather would want it to find the niche bugs that I couldn't see at a first glance
     -   Tell us what it actually did.
-      - It identified the timing attacks that came with the simple comparison: "==" and the upsert logic error. 
+        - It identified the timing attacks that came with the simple comparison: "==" and the upsert logic error. 
     -   Did you have to re-prompt it based on its output?
-      - I re-prompt it to clarify the mechanics of the timing attack. I wasn't sure how an attacker could brute force the expected hash as I thought there was no way to reveal it.
+        - I re-prompt it to clarify the mechanics of the timing attack. I wasn't sure how an attacker could brute force the expected hash as I thought there was no way to reveal it.
     -   If you had to change your approach, why?
-      - I changed my approach from asking "Is this code generally bad" to "How can attackers take advantage of the weak points of this code" because it helped identify specific lines of the code. 
+        - I changed my approach from asking "Is this code generally bad" to "How can attackers take advantage of the weak points of this code" because it helped identify specific lines of the code. 
 
 ------------------------------------------------------------------------
 
@@ -238,16 +238,16 @@ backend code.
 ## Follow-up questions
 
 1.  How far were you able to get with the exercise?
-  - I completed a full stack application with React as the frontend and Flask as the backend. The calculator can handle basic arithmetic operations through a RESTful API (/calculate). I also added a logging middleware to help debug errors (such as divide by 0) and audit any security issues. Finally, I added a visible error on the frontend if it couldn't reach the backend or is under network failures.
+    - I completed a full stack application with React as the frontend and Flask as the backend. The calculator can handle basic arithmetic operations through a RESTful API (/calculate). I also added a logging middleware to help debug errors (such as divide by 0) and audit any security issues. Finally, I added a visible error on the frontend if it couldn't reach the backend or is under network failures.
 
 2.  What challenges did you encounter in the process?
-  - Managing the CORS handshake between the Vite dev server and the Flask API was a bit challenging as empty JSON requests (ex. OPTIONS) would crash the backend as .get_json would fail. 
+    - Managing the CORS handshake between the Vite dev server and the Flask API was a bit challenging as empty JSON requests (ex. OPTIONS) would crash the backend as .get_json would fail. 
 
 3.  If you were given unlimited time, what additional functionality
     would you include?
-  - I would store recent calculations in a database (ex. Redis) so users can see their previous calculations 
-  - I would add more advanced math equations (square root, parenthesis)
-  - Add unit tests with PyTest to verify the math logic and error handling
+    - I would store recent calculations in a database (ex. Redis) so users can see their previous calculations 
+    - I would add more advanced math equations (square root, parenthesis)
+    - Add unit tests with PyTest to verify the math logic and error handling
 
 4.  If you used AI, please include all of your prompts and answer the
     following questions:
@@ -260,15 +260,15 @@ backend code.
       The CSS is causing a white screen, separate the CSS into its own file and fix the centering
       ```
     -   What did the AI do well?
-      - The AI did well at explaining the security issues from timing attacks that came from a simple comparison: '=='
-      - It created the boilerplate for the frontend and backend extremely fast
+        - The AI did well at explaining the security issues from timing attacks that came from a simple comparison: '=='
+        - It created the boilerplate for the frontend and backend extremely fast
     -   What did the AI do poorly?
-      - The AI failed to account for the OPTIONS request which resulted in a 415 error. I showed the error and explained the issue to it.
-      - It tried to shove all the CSS into App.tsx, which resulted in unreadable code and caused issue with Vite. I had to instruct it to separate it to App.css
+        - The AI failed to account for the OPTIONS request which resulted in a 415 error. I showed the error and explained the issue to it.
+        - It tried to shove all the CSS into App.tsx, which resulted in unreadable code and caused issue with Vite. I had to instruct it to separate it to App.css
     -   For the places it did poorly, how did you change your approach
         to your prompts to improve its output?
-      - I provided the error log to it and pointed out where the issue was. It provided detailed reasoning to include 'force=True' in .get_json and check if the method was an OPTIONS request
-      - I started to ask it to separate the code into chunks instead of one file. 
+        - I provided the error log to it and pointed out where the issue was. It provided detailed reasoning to include 'force=True' in .get_json and check if the method was an OPTIONS request
+        - I started to ask it to separate the code into chunks instead of one file. 
 
 ------------------------------------------------------------------------
 
